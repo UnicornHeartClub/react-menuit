@@ -1,4 +1,5 @@
 src/
+example/
 .travis.yml
 yarn.lock
 *.md
