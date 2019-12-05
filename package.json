@@ -1,5 +1,5 @@
 {
-  "name": "menuit",
+  "name": "react-menuit",
   "version": "0.1.0",
   "description": "A lightweight React library for context menus",
   "scripts": {
