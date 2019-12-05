@@ -1,0 +1,18 @@
+{
+  "name": "react-menuet-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^9.1.4"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.14",
+    "typescript": "^3.7.3"
+  }
+}
