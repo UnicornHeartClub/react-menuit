@@ -17,13 +17,15 @@ export interface IMenuContext {
   y: number
 }
 
-export const MenuContext = React.createContext<IMenuContext>({
+const MenuContext = React.createContext<IMenuContext>({
   open: undefined,
   setOpen: () => {},
   setPosition: () => {},
   x: 0,
   y: 0,
 })
+
+export const MenuConsumer = MenuContext.Consumer
 
 /**
  * Menu Provider Props
