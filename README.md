@@ -1,19 +1,19 @@
 # Menuit 🎶
 
-![npm](https://img.shields.io/npm/v/menuit.svg)
-![david-dm](https://david-dm.org/UnicornHeartClub/menuit.svg)
-[![Build Status](https://travis-ci.com/UnicornHeartClub/menuit.svg?branch=master)](https://travis-ci.com/UnicornHeartClub/menuit)
+![npm](https://img.shields.io/npm/v/react-menuit.svg)
+![david-dm](https://david-dm.org/UnicornHeartClub/react-menuit.svg)
+[![Build Status](https://travis-ci.com/UnicornHeartClub/react-menuit.svg?branch=master)](https://travis-ci.com/UnicornHeartClub/react-menuit)
 
 A lightweight library to manage context menus for your [React](https://reactjs.org)
 application. Just how lightweight is it?
 
-![minified size](https://badgen.net/bundlephobia/min/menuit)
-![minzipped size](https://badgen.net/bundlephobia/minzip/menuit)
+![minified size](https://badgen.net/bundlephobia/min/react-menuit)
+![minzipped size](https://badgen.net/bundlephobia/minzip/react-menuit)
 
 ## Installation
 
 ```bash
-$ yarn add menuit
+$ yarn add react-menuit
 ```
 
 ### Requirements
@@ -32,7 +32,7 @@ TypeScript definitions.
 ## Usage
 
 ```typescript
-import { MenuProvider, Menu, MenuItem, MenuTrigger } from 'menuit'
+import { MenuProvider, Menu, MenuItem, MenuTrigger } from 'react-menuit'
 
 // Wrap the root of your application to provide global menu support
 export default () => (
