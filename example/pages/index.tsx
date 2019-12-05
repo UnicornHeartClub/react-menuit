@@ -52,7 +52,7 @@ export default () => (
                   setPosition({ x: e.pageX, y: e.pageY })
                 }}
               >
-                open menus programatically
+                open menus programmatically
               </a>
               .
             </p>
