@@ -18,7 +18,7 @@ export default () => (
         <MenuItem>Item 4</MenuItem>
       </Menu>
 
-      <Menu id="example-2">
+      <Menu id="example-2" style={{ width: '124px' }}>
         <MenuItem>Save as</MenuItem>
         <MenuItem>Save as copy</MenuItem>
         <MenuItem>Delete</MenuItem>
@@ -32,6 +32,12 @@ export default () => (
       <section>
         <MenuTrigger contextMenu="example-1">Right-click to open</MenuTrigger>
         <MenuTrigger contextMenu="example-2">Options</MenuTrigger>
+
+        <div style={{ float: 'right' }}>
+          <MenuTrigger contextMenu="example-2" right>
+            Context Aware
+          </MenuTrigger>
+        </div>
       </section>
 
       <section>

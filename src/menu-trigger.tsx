@@ -13,6 +13,10 @@ export interface IMenuitMenuTrigger {
   contextMenu?: string
   holdDuration?: number
   holdMenu?: string
+
+  // Alignment
+  bottom?: boolean
+  right?: boolean
 }
 
 export default (props: IMenuitMenuTrigger) => {

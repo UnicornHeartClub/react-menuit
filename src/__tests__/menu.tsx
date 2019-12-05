@@ -73,4 +73,23 @@ describe('Menu', () => {
     expect(children.at(1).text()).toEqual('Example Item 2')
     expect(children.at(2).text()).toEqual('Example Item 3')
   })
+
+  describe('Dynamic Menu', () => {
+    it.only('can build a dynamic list of menu items', () => {
+      const wrapper = mount(
+        <MenuProvider>
+          <Menu id="foo-1" />
+
+          <MenuTrigger contextMenu="foo-1">Open Menu</MenuTrigger>
+        </MenuProvider>,
+      )
+
+      wrapper.find('button').simulate('contextmenu')
+
+      expect(wrapper.find('ul')).toHaveLength(1)
+      expect(wrapper.find('ul').children()).toHaveLength(0)
+
+      console.log(wrapper.find(Menu).instance())
+    })
+  })
 })

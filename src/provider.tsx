@@ -6,24 +6,28 @@
 
 import * as React from 'react'
 
+export interface IPoint {
+  x: number
+  y: number
+}
+
 /**
  * Menu Context
  */
 export interface IMenuContext {
   open?: string
+  position: { x: number; y: number }
   setOpen: any
   setPosition: any
-  x: number
-  y: number
 }
 
-const MenuContext = React.createContext<IMenuContext>({
+const defaultState: IMenuContext = {
   open: undefined,
+  position: { x: 0, y: 0 },
   setOpen: () => {},
   setPosition: () => {},
-  x: 0,
-  y: 0,
-})
+}
+const MenuContext = React.createContext<IMenuContext>(defaultState)
 
 export const MenuConsumer = MenuContext.Consumer
 
@@ -39,10 +43,10 @@ export interface IMenuProvider {
  */
 export default (props: IMenuProvider) => {
   const [open, setOpen] = React.useState<string | undefined>(undefined)
-  const [{ x, y }, setPosition] = React.useState<{ x: number; y: number }>({ x: 0, y: 0 })
+  const [position, setPosition] = React.useState<IPoint>(defaultState.position)
 
   return (
-    <MenuContext.Provider value={{ open, setOpen, setPosition, x, y }}>
+    <MenuContext.Provider value={{ open, setOpen, setPosition, position }}>
       {props.children}
     </MenuContext.Provider>
   )
