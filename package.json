@@ -1,6 +1,6 @@
 {
   "name": "react-menuit",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A lightweight React library for context menus",
   "scripts": {
     "prepare": "npm test",
