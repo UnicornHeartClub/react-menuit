@@ -1,9 +1,16 @@
 /** @format */
 
-import { useMenu } from '../'
+import { useMenu, MenuProvider } from '../'
+
+import BaseMenuProvider from '../provider'
+import baseUseMenu from '../hook'
 
 describe('react-menuit', () => {
-  it('exposes "useMenu" hook', () => {
-    expect(typeof useMenu).not.toBe('undefined')
+  it('exports "useMenu" hook', () => {
+    expect(useMenu).toBe(baseUseMenu)
+  })
+
+  it('exports "MenuProvider"', () => {
+    expect(MenuProvider).toBe(BaseMenuProvider)
   })
 })

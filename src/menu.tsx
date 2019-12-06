@@ -10,10 +10,10 @@ import * as CSS from 'csstype'
 import { IPoint } from './'
 
 export interface IMenu {
-  active: boolean
-  closeMenu(): any
-  items: React.ReactNode[]
-  position: IPoint
+  active?: boolean
+  closeMenu?(): any
+  items?: React.ReactNode[]
+  position?: IPoint
   style?: CSS.Properties
 }
 
@@ -32,13 +32,8 @@ const bgStyle: CSS.Properties = {
 }
 
 export default (props: IMenu) => {
-  const {
-    active = false,
-    closeMenu,
-    items,
-    style = {},
-    position: { x, y },
-  } = props
+  const { active = false, closeMenu, items = [], style = {}, position = { x: 0, y: 0 } } = props
+  const { x, y } = position
 
   /**
    * Menu Reference
