@@ -1,12 +1,18 @@
 /**
- * Menuit
+ * Menuit Library
  *
- * A lightweight React library to manage context menus
+ * Exposes components and interfaces
  *
  * @format
  */
 
-export { default as Menu, IMenuitMenu } from './menu'
-export { default as MenuItem, IMenuitMenuItem } from './menu-item'
-export { default as MenuProvider, MenuConsumer, IMenuContext, IMenuProvider } from './provider'
-export { default as MenuTrigger, IMenuitMenuTrigger } from './menu-trigger'
+/**
+ * Point
+ */
+export interface IPoint {
+  x: number
+  y: number
+}
+
+export { default as useMenu } from './hook'
+export { default as MenuProvider } from './provider'

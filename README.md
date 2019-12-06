@@ -10,6 +10,8 @@ application. Just how lightweight is it?
 ![minified size](https://badgen.net/bundlephobia/min/react-menuit)
 ![minzipped size](https://badgen.net/bundlephobia/minzip/react-menuit)
 
+⚠️ **Not ready for production use, yet!** ⚠️ 
+
 ## Installation
 
 ```bash
@@ -32,29 +34,23 @@ TypeScript definitions.
 ## Usage
 
 ```typescript
-import { MenuProvider, Menu, MenuItem, MenuTrigger } from 'react-menuit'
+import { MenuProvider, MenuConsumer } from 'react-menuit'
 
 // Wrap the root of your application to provide global menu support
-export default () => (
-  <MenuProvider>
-    <header>
-      <MenuTrigger contextMenu="example-1">Right-click to open</MenuTrigger>
-      <MenuTrigger holdMenu="example-1" holdDuration={2000}>Hold 2s to open</MenuTrigger>
-    </header>
-
-    <section>
-      <Menu id="example-1">
-        <MenuItem>Item 1</MenuItem>
-        <MenuItem>Item 2</MenuItem>
-        <MenuItem>Item 3</MenuItem>
-        <MenuItem divider />
-        <MenuItem>
-          <span>Even HTML</span>
-        </MenuItem>
-      </Menu>
-    </section>
-  </MenuProvider>
-)
+export default () => {
+  return (
+    <MenuProvider>
+      <MenuConsumer>
+        {({ openMenu }) => (
+          <button onClick={e => openMenu({ x: e.pageX, y: e.pageY }, [
+            <a onClick={action1}>Item 1</a>,
+            <a onClick={action2}>Item 2</a>,
+          ])}>Open Menu</button>
+        )}
+      </MenuConsumer>
+    </MenuProvider>
+  )
+}
 ```
 
 ## License

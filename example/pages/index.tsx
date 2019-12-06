@@ -2,27 +2,37 @@
 
 import * as React from 'react'
 import Head from 'next/head'
+import * as CSS from 'csstype'
 
-import { MenuConsumer, MenuProvider, Menu, MenuItem, MenuTrigger } from '../../'
+import { useMenu } from '../../'
 
-export default () => (
-  <>
-    <Head>
-      <title>Menuit Examples</title>
-    </Head>
-    <MenuProvider>
-      <Menu id="example-1">
-        <MenuItem>Item 1</MenuItem>
-        <MenuItem>Item 2</MenuItem>
-        <MenuItem>Item 3</MenuItem>
-        <MenuItem>Item 4</MenuItem>
-      </Menu>
+/**
+ * Test Component
+ */
+export default () => {
+  const action1 = React.useCallback(() => console.log('Action 1'), [])
+  const action2 = React.useCallback(() => console.log('Action 2'), [])
+  const action3 = React.useCallback(() => console.log('Action 3'), [])
 
-      <Menu id="example-2" style={{ width: '124px' }}>
-        <MenuItem>Save as</MenuItem>
-        <MenuItem>Save as copy</MenuItem>
-        <MenuItem>Delete</MenuItem>
-      </Menu>
+  const { Menu, handleClick, openMenu } = useMenu([
+    <a href="#" onClick={action1}>
+      Action 1
+    </a>,
+    <a href="#" onClick={action2}>
+      Action 2
+    </a>,
+    <a href="#" onClick={action3}>
+      Action 3
+    </a>,
+  ])
+
+  return (
+    <>
+      <Head>
+        <title>Menuit Examples</title>
+      </Head>
+
+      <Menu />
 
       <header>
         <h1>Menuit Examples</h1>
@@ -30,41 +40,31 @@ export default () => (
       </header>
 
       <section>
-        <MenuTrigger contextMenu="example-1">Right-click to open</MenuTrigger>
-        <MenuTrigger contextMenu="example-2">Options</MenuTrigger>
+        <button onContextMenu={handleClick}>Right-click to open</button>
 
-        <div style={{ float: 'right' }}>
-          <MenuTrigger contextMenu="example-2" right>
-            Context Aware
-          </MenuTrigger>
-        </div>
-      </section>
+        <button
+          onContextMenu={e => {
+            e.preventDefault()
 
-      <section>
-        <MenuConsumer>
-          {({ setOpen, setPosition }) => (
-            <p>
-              Optionally, you can also{' '}
-              <a
-                href="#"
-                onClick={e => {
-                  e.preventDefault()
-                  setOpen('example-1')
-                  setPosition({ x: e.pageX, y: e.pageY })
-                }}
-                onContextMenu={e => {
-                  e.preventDefault()
-                  setOpen('example-1')
-                  setPosition({ x: e.pageX, y: e.pageY })
-                }}
-              >
-                open menus programmatically
-              </a>
-              .
-            </p>
-          )}
-        </MenuConsumer>
+            openMenu(
+              [
+                <a href="#" onClick={action1}>
+                  Custom 1
+                </a>,
+                <a href="#" onClick={action2}>
+                  Custom 2
+                </a>,
+                <a href="#" onClick={action3}>
+                  Custom 3
+                </a>,
+              ],
+              { x: e.pageX, y: e.pageY },
+            )
+          }}
+        >
+          Right-click to open custom menu
+        </button>
       </section>
-    </MenuProvider>
-  </>
-)
+    </>
+  )
+}
