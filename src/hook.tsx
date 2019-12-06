@@ -15,9 +15,12 @@ import { IPoint } from './'
 
 export interface IMenuHook {
   Menu(): React.ReactComponentElement<any>
+  closeMenu(): any
   handleClick(event: React.MouseEvent<any, MouseEvent>): any
   openMenu(items: React.ReactNode[], position: IPoint): any
-  closeMenu(): any
+  setItems(items: React.ReactNode[]): any
+  setOpen(open: boolean): any
+  setPosition(position: IPoint): any
 }
 
 export default (initialItems: React.ReactNode[] = []): IMenuHook => {
@@ -66,5 +69,13 @@ export default (initialItems: React.ReactNode[] = []): IMenuHook => {
     [open],
   )
 
-  return { Menu: HookMenu, handleClick, openMenu, closeMenu }
+  return {
+    Menu: HookMenu,
+    closeMenu,
+    handleClick,
+    openMenu,
+    setItems,
+    setOpen,
+    setPosition,
+  }
 }
