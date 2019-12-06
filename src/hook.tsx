@@ -6,7 +6,7 @@
 
 import * as React from 'react'
 
-import Menu from './menu'
+import Menu, { IMenu } from './menu'
 import { IPoint } from './'
 
 /**
@@ -14,7 +14,7 @@ import { IPoint } from './'
  */
 
 export interface IMenuHook {
-  Menu(): React.ReactComponentElement<any>
+  Menu(props: Partial<IMenu>): React.ReactComponentElement<any>
   closeMenu(event?: React.MouseEvent<any, MouseEvent>): any
   handleClick(event: React.MouseEvent<any, MouseEvent>): any
   items: React.ReactNode[]
@@ -70,7 +70,9 @@ export default (initialItems: React.ReactNode[] = []): IMenuHook => {
   }, [])
 
   const HookMenu = React.useCallback(
-    () => <Menu active={open} closeMenu={closeMenu} items={items} position={position} />,
+    (props: Partial<IMenu>) => (
+      <Menu active={open} closeMenu={closeMenu} items={items} position={position} {...props} />
+    ),
     [open],
   )
 

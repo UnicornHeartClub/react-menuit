@@ -15,4 +15,5 @@ export interface IPoint {
 }
 
 export { default as useMenu, IMenuHook } from './hook'
-export { default as MenuProvider } from './provider'
+export { default as MenuProvider, IMenuProvider } from './provider'
+export { default as Menu, IMenu } from './menu'

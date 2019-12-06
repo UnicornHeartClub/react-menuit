@@ -28,7 +28,9 @@ describe('useMenu', () => {
     let componentResult: HookResult<any>
 
     beforeEach(() => {
-      const componentHook = renderHook(result.current.Menu)
+      const componentHook = renderHook(result.current.Menu, {
+        initialProps: { className: 'foo', id: 'test' },
+      })
       componentResult = componentHook.result
     })
 
@@ -77,6 +79,19 @@ describe('useMenu', () => {
 
       expect(position).not.toBe(undefined)
       expect(position).toStrictEqual({ x: 0, y: 0 })
+    })
+
+    it('consumes passed props when mounted', () => {
+      const {
+        current: {
+          props: { className, id },
+        },
+      } = componentResult
+
+      expect(className).not.toBe(undefined)
+      expect(id).not.toBe(undefined)
+      expect(className).toBe('foo')
+      expect(id).toBe('test')
     })
   })
 

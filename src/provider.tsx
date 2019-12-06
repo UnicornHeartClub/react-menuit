@@ -8,7 +8,7 @@ import * as React from 'react'
 
 import useMenu, { IMenuHook } from './hook'
 
-interface IMenuProvider {
+export interface IMenuProvider {
   children(menu: IMenuHook): React.ReactNode
 }
 

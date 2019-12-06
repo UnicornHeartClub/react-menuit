@@ -11,7 +11,9 @@ import { IPoint } from './'
 
 export interface IMenu {
   active?: boolean
+  className?: string
   closeMenu?(): any
+  id?: string
   items?: React.ReactNode[]
   position?: IPoint
   style?: CSS.Properties
@@ -32,7 +34,15 @@ const bgStyle: CSS.Properties = {
 }
 
 export default (props: IMenu) => {
-  const { active = false, closeMenu, items = [], style = {}, position = { x: 0, y: 0 } } = props
+  const {
+    active = false,
+    className,
+    closeMenu,
+    id,
+    items = [],
+    position = { x: 0, y: 0 },
+    style = {},
+  } = props
   const { x, y } = position
 
   /**
@@ -55,7 +65,7 @@ export default (props: IMenu) => {
   return active ? (
     <>
       <div onClick={closeMenu} onContextMenu={closeMenu} style={bgStyle} />
-      <ul ref={ref} style={{ ...style, ...menuStyle }}>
+      <ul className={className} id={id} ref={ref} style={{ ...style, ...menuStyle }}>
         {children}
       </ul>
     </>
