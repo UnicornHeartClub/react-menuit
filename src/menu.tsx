@@ -50,7 +50,11 @@ export default (props: IMenu) => {
    */
   const ref = React.useRef<HTMLUListElement>(null)
 
-  const children = items.map((item, i) => <li key={i}>{item}</li>)
+  const children = items.map((item, i) => (
+    <li key={i} onClick={closeMenu}>
+      {item}
+    </li>
+  ))
 
   React.useEffect(
     () => {

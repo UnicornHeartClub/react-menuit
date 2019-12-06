@@ -64,8 +64,7 @@ export default (initialItems: React.ReactNode[] = []): IMenuHook => {
     [open],
   )
 
-  const closeMenu = React.useCallback((event?: React.MouseEvent<any, MouseEvent>) => {
-    if (event) event.preventDefault()
+  const closeMenu = React.useCallback((_event?: React.MouseEvent<any, MouseEvent>) => {
     setOpen(false)
   }, [])
 

@@ -2,7 +2,6 @@
 
 import * as React from 'react'
 import Head from 'next/head'
-import * as CSS from 'csstype'
 
 import { useMenu } from '../../'
 
@@ -27,12 +26,12 @@ export default () => {
   ])
 
   return (
-    <>
+    <div>
       <Head>
         <title>Menuit Examples</title>
       </Head>
 
-      <Menu />
+      <Menu className="menu" />
 
       <header>
         <h1>Menuit Examples</h1>
@@ -65,6 +64,14 @@ export default () => {
           Right-click to open custom menu
         </button>
       </section>
-    </>
+
+      <style jsx>
+        {`
+          .menu {
+            background-color: #eeeeee;
+          }
+        `}
+      </style>
+    </div>
   )
 }
