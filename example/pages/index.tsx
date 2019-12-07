@@ -3,6 +3,8 @@
 import * as React from 'react'
 import Head from 'next/head'
 
+import '../styles.scss'
+
 import { useMenu } from '../../'
 
 /**
@@ -22,6 +24,26 @@ export default () => {
     </a>,
     <a href="#" onClick={action3}>
       Action 3
+      <ul className="menu">
+        <li>
+          <a href="#" onClick={action1}>
+            Sub Action 1
+          </a>
+        </li>
+        <li>
+          <a href="#" onClick={action2}>
+            Sub Action 2
+          </a>
+        </li>
+        <li>
+          <a href="#" onClick={action3}>
+            Sub Action 3
+          </a>
+        </li>
+      </ul>
+    </a>,
+    <a href="#" onClick={action3}>
+      Action 4
     </a>,
   ])
 
@@ -64,14 +86,6 @@ export default () => {
           Right-click to open custom menu
         </button>
       </section>
-
-      <style jsx>
-        {`
-          .menu {
-            background-color: #eeeeee;
-          }
-        `}
-      </style>
     </div>
   )
 }

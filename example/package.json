@@ -9,7 +9,9 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "^9.1.4"
+    "@zeit/next-sass": "^1.0.1",
+    "next": "^9.1.4",
+    "node-sass": "^4.13.0"
   },
   "devDependencies": {
     "@types/node": "^12.12.14",

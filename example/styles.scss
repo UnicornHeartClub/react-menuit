@@ -1,0 +1,35 @@
+.menu {
+  background-color: #f9f9f9;
+  border: 1px solid #d6d6d6;
+  box-sizing: border-box;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 74px;
+
+  li {
+    a {
+      color: #000;
+      display: block;
+      font-size: 12px;
+      padding: 4px 8px;
+      text-decoration: none;
+
+      ul {
+        display: none;
+        margin-top: -18px; // 8px top/bottom padding + 2px top/bottom border
+      }
+
+      &:hover {
+        background-color: #f2f2f2;
+
+        ul {
+          width: 94px;
+          display: block;
+          position: absolute;
+          left: 100%;
+        }
+      }
+    }
+  }
+}
