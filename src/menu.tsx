@@ -10,11 +10,11 @@ import * as CSS from 'csstype'
 import { IPoint } from './'
 
 export interface IMenu {
-  active: boolean
+  active?: boolean
   className?: string
   id?: string
-  items: React.ReactNode[]
-  position: IPoint
+  items?: React.ReactNode[]
+  position?: IPoint
   handleClose(event: React.MouseEvent<any, MouseEvent>): any
   style?: CSS.Properties
 }
@@ -48,6 +48,18 @@ export default (props: IMenu) => {
     }
   }, [])
 
+  // Memoize the style object
+  const ulStyle = React.useMemo(
+    () => ({
+      ...style,
+      ...menuStyle,
+      display: active ? 'block' : 'none',
+      left: `${x}px`,
+      top: `${y}px`,
+    }),
+    [active, x, y, style],
+  )
+
   // Add <li /> to the children and close the menu when we click something
   const children = items.map((item, i) => (
     <li key={i} onClick={handleClose}>
@@ -55,20 +67,8 @@ export default (props: IMenu) => {
     </li>
   ))
 
-  // Update the position of the menu
-  React.useEffect(
-    () => {
-      if (menu.current) {
-        menu.current.style.top = `${y}px`
-        menu.current.style.left = `${x}px`
-        menu.current.style.display = active ? 'block' : 'none'
-      }
-    },
-    [x, y],
-  )
-
   return (
-    <ul className={className} id={id} ref={menu} style={{ ...style, ...menuStyle }}>
+    <ul className={className} id={id} ref={menu} style={ulStyle}>
       {children}
     </ul>
   )
