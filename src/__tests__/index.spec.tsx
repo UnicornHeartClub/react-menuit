@@ -1,8 +1,9 @@
 /** @format */
 
-import { useMenu, MenuProvider } from '../'
+import { useMenu, MenuProvider, Menu } from '../'
 
 import BaseMenuProvider from '../provider'
+import BaseMenu from '../menu'
 import baseUseMenu from '../hook'
 
 describe('react-menuit', () => {
@@ -12,5 +13,9 @@ describe('react-menuit', () => {
 
   it('exports "MenuProvider"', () => {
     expect(MenuProvider).toBe(BaseMenuProvider)
+  })
+
+  it('exports "Menu"', () => {
+    expect(Menu).toBe(BaseMenu)
   })
 })

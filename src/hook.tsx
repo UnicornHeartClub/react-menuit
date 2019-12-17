@@ -15,8 +15,8 @@ import { IPoint } from './'
 
 export interface IMenuHook {
   Menu(props: Partial<IMenu>): React.ReactComponentElement<any>
-  closeMenu(event?: React.MouseEvent<any, MouseEvent>): any
   handleClick(event: React.MouseEvent<any, MouseEvent>): any
+  handleClose(event: React.MouseEvent<any, MouseEvent>): any
   items: React.ReactNode[]
   open: boolean
   openMenu(items: React.ReactNode[], position: IPoint): any
@@ -42,43 +42,50 @@ export default (initialItems: React.ReactNode[] = []): IMenuHook => {
   const [position, setPosition] = React.useState<IPoint>({ x: 0, y: 0 })
 
   /**
+   * Force open the menu and update the position
+   */
+  const openMenu = React.useCallback((items: React.ReactNode[], position: IPoint) => {
+    setItems(items)
+    setPosition(position)
+    setOpen(true)
+  }, [])
+
+  /**
    * Open and position the menu automatically
    */
   const handleClick = React.useCallback(
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       event.preventDefault()
-
-      setItems(initialItems)
-      setPosition({ x: event.pageX, y: event.pageY })
-      setOpen(!open)
+      openMenu(initialItems, { x: event.pageX, y: event.pageY })
     },
-    [open],
+    [],
   )
 
-  const openMenu = React.useCallback(
-    (items: React.ReactNode[], position: IPoint) => {
-      setItems(items)
-      setPosition(position)
-      setOpen(!open)
-    },
-    [open],
-  )
-
-  const closeMenu = React.useCallback((_event?: React.MouseEvent<any, MouseEvent>) => {
-    setOpen(false)
+  /**
+   * Force close the menu
+   */
+  const handleClose = React.useCallback((event: React.MouseEvent<any, MouseEvent>) => {
+    if (!event.defaultPrevented) {
+      event.preventDefault()
+      setOpen(false)
+    }
   }, [])
 
+  /**
+   * <Menu /> component
+   * Used to render the menu items
+   */
   const HookMenu = React.useCallback(
     (props: Partial<IMenu>) => (
-      <Menu active={open} closeMenu={closeMenu} items={items} position={position} {...props} />
+      <Menu {...props} active={open} items={items} position={position} handleClose={handleClose} />
     ),
-    [open],
+    [open, position.x, position.y],
   )
 
   return {
     Menu: HookMenu,
-    closeMenu,
     handleClick,
+    handleClose,
     items,
     open,
     openMenu,

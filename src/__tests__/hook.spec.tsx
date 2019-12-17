@@ -49,14 +49,14 @@ describe('useMenu', () => {
       expect(active).toBe(false)
     })
 
-    it('passes closeMenu prop method', () => {
+    it('passes handleClose prop method', () => {
       const {
         current: {
-          props: { closeMenu },
+          props: { handleClose },
         },
       } = componentResult
 
-      expect(closeMenu).not.toBe(undefined)
+      expect(handleClose).not.toBe(undefined)
     })
 
     it('passes items prop', () => {
@@ -95,12 +95,14 @@ describe('useMenu', () => {
     })
   })
 
-  describe('closeMenu', () => {
-    it('exports closeMenu method', () => {
-      expect(result.current.closeMenu).not.toBe(undefined)
+  describe('handleClose', () => {
+    it('exports handleClose method', () => {
+      expect(result.current.handleClose).not.toBe(undefined)
     })
 
     it('calls setOpen method and sets to false', () => {})
+
+    it('does not call setOpen when defaultPrevented', () => {})
   })
 
   describe('handleClick', () => {
