@@ -15,14 +15,14 @@ export default () => {
   const action2 = React.useCallback(() => console.log('Action 2'), [])
   const action3 = React.useCallback(() => console.log('Action 3'), [])
 
-  const { Menu, handleClick, openMenu } = useMenu([
+  const { Menu, handleClick, openMenu, handleClose } = useMenu([
     <a href="#" onClick={action1}>
       Action 1
     </a>,
     <a href="#" onClick={action2}>
       Action 2
     </a>,
-    <a href="#" onClick={action3}>
+    <span>
       Action 3
       <ul className="menu">
         <li>
@@ -41,14 +41,14 @@ export default () => {
           </a>
         </li>
       </ul>
-    </a>,
+    </span>,
     <a href="#" onClick={action3}>
       Action 4
     </a>,
   ])
 
   return (
-    <div>
+    <div onClick={handleClose} id="app">
       <Head>
         <title>Menuit Examples</title>
       </Head>

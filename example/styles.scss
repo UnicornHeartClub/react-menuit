@@ -1,3 +1,22 @@
+body,
+html,
+#__next,
+#app {
+  margin: 0;
+  padding:0 ;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#app {
+  padding: 24px;
+}
+
+h1 {
+  margin-top: 0;
+}
+
 .menu {
   background-color: #f9f9f9;
   border: 1px solid #d6d6d6;
