@@ -10,7 +10,7 @@ import * as CSS from 'csstype'
 import { IPoint } from './'
 
 export interface IMenu {
-  active?: boolean
+  open?: boolean
   className?: string
   id?: string
   items?: React.ReactNode[]
@@ -27,7 +27,7 @@ const menuStyle: CSS.Properties = {
 
 export default (props: IMenu) => {
   const {
-    active = false,
+    open = false,
     className,
     id,
     items = [],
@@ -53,11 +53,11 @@ export default (props: IMenu) => {
     () => ({
       ...style,
       ...menuStyle,
-      display: active ? 'block' : 'none',
+      display: open ? 'block' : 'none',
       left: `${x}px`,
       top: `${y}px`,
     }),
-    [active, x, y, style],
+    [open, x, y, style],
   )
 
   // Add <li /> to the children and close the menu when we click something

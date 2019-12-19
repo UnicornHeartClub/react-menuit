@@ -1,8 +1,10 @@
 /** @format */
 
-// import * as React from 'react'
+import * as React from 'react'
 import { HookResult, renderHook } from '@testing-library/react-hooks'
+import { mount, ReactWrapper } from 'enzyme'
 
+import Menu from '../menu'
 import useMenu, { IMenuHook } from '../hook'
 
 describe('useMenu', () => {
@@ -11,6 +13,9 @@ describe('useMenu', () => {
   beforeEach(() => {
     const hook = renderHook(useMenu)
     result = hook.result
+
+    window.addEventListener = jest.fn()
+    window.removeEventListener = jest.fn()
   })
 
   it('exports open state and defaults to "false"', () => {
@@ -25,73 +30,71 @@ describe('useMenu', () => {
 
   describe('Menu', () => {
     // @FIXME this should be properly typed
-    let componentResult: HookResult<any>
+    let wrapper: ReactWrapper<any>
 
     beforeEach(() => {
-      const componentHook = renderHook(result.current.Menu, {
-        initialProps: { className: 'foo', id: 'test' },
-      })
-      componentResult = componentHook.result
+      const App = () => {
+        const menu = useMenu()
+
+        return (
+          <div>
+            <menu.Menu {...menu.menuProps} className="foo" id="test" />
+            <button onClick={menu.handleClick}>Click Me</button>
+          </div>
+        )
+      }
+      wrapper = mount(<App />)
     })
 
     it('exports a Menu component', () => {
       expect(result.current.Menu).not.toBe(undefined)
     })
 
-    it('passes active prop', () => {
-      const {
-        current: {
-          props: { active },
-        },
-      } = componentResult
-
-      expect(active).not.toBe(undefined)
-      expect(active).toBe(false)
+    it('passes open prop', () => {
+      expect(wrapper.find(Menu).prop('open')).not.toBe(undefined)
+      expect(wrapper.find(Menu).prop('open')).toBe(false)
     })
 
     it('passes handleClose prop method', () => {
-      const {
-        current: {
-          props: { handleClose },
-        },
-      } = componentResult
-
-      expect(handleClose).not.toBe(undefined)
+      expect(wrapper.find(Menu).prop('handleClose')).not.toBe(undefined)
     })
 
     it('passes items prop', () => {
-      const {
-        current: {
-          props: { items },
-        },
-      } = componentResult
-
-      expect(items).not.toBe(undefined)
-      expect(items).toStrictEqual([])
+      expect(wrapper.find(Menu).prop('items')).not.toBe(undefined)
+      expect(wrapper.find(Menu).prop('items')).toStrictEqual([])
     })
 
     it('passes position prop', () => {
-      const {
-        current: {
-          props: { position },
-        },
-      } = componentResult
+      expect(wrapper.find(Menu).prop('position')).not.toBe(undefined)
+      expect(wrapper.find(Menu).prop('position')).toStrictEqual({ x: 0, y: 0 })
+    })
 
-      expect(position).not.toBe(undefined)
-      expect(position).toStrictEqual({ x: 0, y: 0 })
+    it('updates position', () => {
+      expect(wrapper.find(Menu)).toHaveLength(1)
+
+      wrapper.find('button').simulate('click', { pageX: 100, pageY: 200 })
+      
+      expect(wrapper.find(Menu).prop('position')).toEqual({
+        x: 100, y: 200,
+      })
     })
 
     it('consumes passed props when mounted', () => {
-      const {
-        current: {
-          props: { className, id },
-        },
-      } = componentResult
+      expect(wrapper.find(Menu).prop('className')).not.toBe(undefined)
+      expect(wrapper.find(Menu).prop('id')).not.toBe(undefined)
+      expect(wrapper.find(Menu).prop('className')).toBe('foo')
+      expect(wrapper.find(Menu).prop('id')).toBe('test')
+    })
 
-      expect(className).not.toBe(undefined)
-      expect(id).not.toBe(undefined)
-      expect(className).toBe('foo')
-      expect(id).toBe('test')
+    it('does not unmount on hook dependency change', () => {
+      const mountContextCalls = (window.addEventListener as jest.Mock).mock.calls.filter(call => call[0] === 'contextmenu')
+      expect(mountContextCalls).toHaveLength(1)
+
+      wrapper.find('button').simulate('click')
+
+      // ensure removeEventListener not called, happens if <Menu /> unmounts
+      const unmountContextCalls = (window.removeEventListener as jest.Mock).mock.calls.filter(call => call[0] === 'contextmenu')
+      expect(unmountContextCalls).toHaveLength(0)
     })
   })
 

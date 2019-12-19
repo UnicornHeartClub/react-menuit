@@ -22,8 +22,8 @@ describe('Menu', () => {
     expect(menu.find('ul').get(0).props.style.display).toEqual('none')
   })
 
-  it('renders when active', () => {
-    const menu = mount(<Menu active handleClose={handleClose} />)
+  it('renders when open', () => {
+    const menu = mount(<Menu open handleClose={handleClose} />)
     expect(menu.find('ul').get(0).props.style.display).toEqual('block')
   })
 
@@ -39,7 +39,7 @@ describe('Menu', () => {
 
   it('builds <li /> list elements', () => {
     const items = [<a>1</a>, <a>2</a>, <a>3</a>]
-    const menu = mount(<Menu active handleClose={handleClose} items={items} />)
+    const menu = mount(<Menu open handleClose={handleClose} items={items} />)
     const li = menu.find('ul li')
 
     expect(li).toHaveLength(3)
@@ -51,7 +51,7 @@ describe('Menu', () => {
   it('<li /> elements close menu when clicked', () => {
     const items = [<a>1</a>, <a>2</a>, <a>3</a>]
 
-    const menu = mount(<Menu active handleClose={handleClose} items={items} />)
+    const menu = mount(<Menu open handleClose={handleClose} items={items} />)
 
     menu
       .find('ul li')
@@ -75,7 +75,7 @@ describe('Menu', () => {
       </span>,
     ]
 
-    const menu = mount(<Menu active handleClose={handleClose} items={items} />)
+    const menu = mount(<Menu open handleClose={handleClose} items={items} />)
 
     menu
       .find('ul li')

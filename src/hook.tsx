@@ -18,6 +18,7 @@ export interface IMenuHook {
   handleClick(event: React.MouseEvent<any, MouseEvent>): any
   handleClose(event: React.MouseEvent<any, MouseEvent>): any
   items: React.ReactNode[]
+  menuProps: IMenu
   open: boolean
   openMenu(items: React.ReactNode[], position: IPoint): any
   setItems(items: React.ReactNode[]): any
@@ -71,19 +72,16 @@ export default (initialItems: React.ReactNode[] = []): IMenuHook => {
     }
   }, [])
 
-  /**
-   * <Menu /> component
-   * Used to render the menu items
-   */
-  const HookMenu = React.useCallback(
-    (props: Partial<IMenu>) => (
-      <Menu {...props} active={open} items={items} position={position} handleClose={handleClose} />
-    ),
-    [open, position.x, position.y],
-  )
+  const menuProps = React.useMemo(() => ({
+    position,
+    items,
+    open,
+    handleClose
+  }), [position, items, open])
 
   return {
-    Menu: HookMenu,
+    Menu,
+    menuProps,
     handleClick,
     handleClose,
     items,
