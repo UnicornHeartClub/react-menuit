@@ -65,19 +65,25 @@ export default (initialItems: React.ReactNode[] = []): IMenuHook => {
   /**
    * Force close the menu
    */
-  const handleClose = React.useCallback((event: React.MouseEvent<any, MouseEvent>) => {
-    if (!event.defaultPrevented) {
-      event.preventDefault()
-      setOpen(false)
-    }
-  }, [])
+  const handleClose = React.useCallback(
+    (event: React.MouseEvent<any, MouseEvent>) => {
+      if (!event.defaultPrevented && open) {
+        event.preventDefault()
+        setOpen(false)
+      }
+    },
+    [open],
+  )
 
-  const menuProps = React.useMemo(() => ({
-    position,
-    items,
-    open,
-    handleClose
-  }), [position, items, open])
+  const menuProps = React.useMemo(
+    () => ({
+      position,
+      items,
+      open,
+      handleClose,
+    }),
+    [position, items, open],
+  )
 
   return {
     Menu,
