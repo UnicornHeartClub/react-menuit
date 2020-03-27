@@ -4,12 +4,10 @@
  * @format
  */
 
-import * as React from 'react'
-
 import useMenu, { IMenuHook } from './hook'
 
 export interface IMenuProvider {
-  children(menu: IMenuHook): React.ReactNode
+  children(menu: IMenuHook): JSX.Element
 }
 
 export default (props: IMenuProvider) => {
