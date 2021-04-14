@@ -26,6 +26,18 @@ export interface IMenuHook {
   setPosition(position: IPoint): any
 }
 
+interface IMenuState {
+  open: boolean
+  position: IPoint
+}
+
+function menuStateReducer(state: IMenuState, action: Partial<IMenuState>): IMenuState {
+  return {
+    position: action.position ?? state.position,
+    open: action.open ?? state.open,
+  }
+}
+
 export default (initialItems: React.ReactNode[] = []): IMenuHook => {
   /**
    * Menu Items
@@ -33,22 +45,35 @@ export default (initialItems: React.ReactNode[] = []): IMenuHook => {
   const [items, setItems] = React.useState<React.ReactNode[]>(initialItems)
 
   /**
-   * Menu Open
+   * Menu state
    */
-  const [open, setOpen] = React.useState<boolean>(false)
+  const [{ open, position }, updateMenuState] = React.useReducer(menuStateReducer, {
+    open: false,
+    position: { x: 0, y: 0 },
+  })
 
-  /**
-   * Menu Position
-   */
-  const [position, setPosition] = React.useState<IPoint>({ x: 0, y: 0 })
+  const setOpen = React.useCallback(
+    (open: boolean) => {
+      updateMenuState({ open })
+    },
+    [updateMenuState],
+  )
+  const setPosition = React.useCallback(
+    (position: IPoint) => {
+      updateMenuState({ position })
+    },
+    [updateMenuState],
+  )
 
   /**
    * Force open the menu and update the position
    */
   const openMenu = React.useCallback((items: React.ReactNode[], position: IPoint) => {
     setItems(items)
-    setPosition(position)
-    setOpen(true)
+    updateMenuState({
+      open: true,
+      position,
+    })
   }, [])
 
   /**
