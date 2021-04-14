@@ -6,6 +6,7 @@
     "prepare": "npm test",
     "prepublishOnly": "npm run build",
     "build": "tsc && uglifyjs  dist/index.js --compress --mangle -o dist/index.js --source-map \"filename='dist/index.js.map'\"",
+    "dev": "tsc -w",
     "test": "jest",
     "test:dev": "jest --watch"
   },
