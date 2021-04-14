@@ -15,7 +15,7 @@ export default () => {
   const action2 = React.useCallback(() => console.log('Action 2'), [])
   const action3 = React.useCallback(() => console.log('Action 3'), [])
 
-  const { Menu, handleClick, openMenu, handleClose } = useMenu([
+  const { Menu, handleClick, openMenu, handleClose, menuProps } = useMenu([
     <a href="#" onClick={action1}>
       Action 1
     </a>,
@@ -53,7 +53,7 @@ export default () => {
         <title>Menuit Examples</title>
       </Head>
 
-      <Menu className="menu" />
+      <Menu {...menuProps} className="menu" />
 
       <header>
         <h1>Menuit Examples</h1>
