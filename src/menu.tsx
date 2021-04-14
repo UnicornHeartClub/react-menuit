@@ -5,7 +5,6 @@
  */
 
 import * as React from 'react'
-import * as CSS from 'csstype'
 
 import { IPoint } from './'
 
@@ -16,11 +15,11 @@ export interface IMenu {
   items?: React.ReactNode[]
   position?: IPoint
   handleClose(event: React.MouseEvent<any, MouseEvent>): any
-  style?: CSS.Properties
+  style?: React.CSSProperties
 }
 
-const menuStyle: CSS.Properties = {
-  display: 'none',
+const menuStyle: React.CSSProperties = {
+  display: 'block',
   position: 'fixed',
   zIndex: 9999,
 }
@@ -49,16 +48,39 @@ export default (props: IMenu) => {
   }, [])
 
   // Memoize the style object
-  const ulStyle = React.useMemo(
-    () => ({
+  const ulStyle = React.useMemo<React.CSSProperties>(() => {
+    // disregard offset if we are not yet 'block'
+    let left = x,
+      top = y
+
+    if (open && !!menu.current) {
+      const { offsetHeight, offsetWidth } = menu.current
+      const bounds = menu.current.getBoundingClientRect()
+
+      // Constrain horizontal
+      if (offsetWidth + left >= window.innerWidth) {
+        left = window.innerWidth - offsetWidth
+      } else if (bounds.left < 0) {
+        left = 0
+      }
+
+      // Constrain vertical
+      if (bounds.height + top >= window.innerHeight) {
+        top = window.innerHeight - offsetHeight
+      } else if (bounds.top < 0) {
+        top = 0
+      }
+    }
+
+    return {
       ...style,
       ...menuStyle,
-      display: open ? 'block' : 'none',
-      left: `${x}px`,
-      top: `${y}px`,
-    }),
-    [open, x, y, style],
-  )
+      visibility: open ? undefined : 'hidden',
+      pointerEvents: open ? undefined : 'none',
+      left: `${left}px`,
+      top: `${top}px`,
+    }
+  }, [open, x, y, style])
 
   // Add <li /> to the children and close the menu when we click something
   const children = items.map((item, i) => (

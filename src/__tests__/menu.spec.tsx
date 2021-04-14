@@ -19,12 +19,14 @@ describe('Menu', () => {
 
   it('does not render by default', () => {
     const menu = shallow(<Menu handleClose={handleClose} />)
-    expect(menu.find('ul').get(0).props.style.display).toEqual('none')
+    expect(menu.find('ul').get(0).props.style.visibility).toEqual('hidden')
+    expect(menu.find('ul').get(0).props.style.pointerEvents).toEqual('none')
   })
 
   it('renders when open', () => {
     const menu = mount(<Menu open handleClose={handleClose} />)
-    expect(menu.find('ul').get(0).props.style.display).toEqual('block')
+    expect(menu.find('ul').get(0).props.style.visibility).toBeUndefined()
+    expect(menu.find('ul').get(0).props.style.pointerEvents).toBeUndefined
   })
 
   it('passes className prop to element', () => {
@@ -53,10 +55,7 @@ describe('Menu', () => {
 
     const menu = mount(<Menu open handleClose={handleClose} items={items} />)
 
-    menu
-      .find('ul li')
-      .at(0)
-      .simulate('click', { pageX: 100, pageY: 200 })
+    menu.find('ul li').at(0).simulate('click', { pageX: 100, pageY: 200 })
 
     expect(handleClose).toHaveBeenCalledTimes(1)
   })
@@ -77,10 +76,7 @@ describe('Menu', () => {
 
     const menu = mount(<Menu open handleClose={handleClose} items={items} />)
 
-    menu
-      .find('ul li')
-      .at(2)
-      .simulate('click', { pageX: 100, pageY: 200 })
+    menu.find('ul li').at(2).simulate('click', { pageX: 100, pageY: 200 })
 
     expect(handleClose).toHaveBeenCalledTimes(0)
   })

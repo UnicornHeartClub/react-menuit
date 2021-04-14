@@ -85,6 +85,13 @@ export default () => {
         >
           Right-click to open custom menu
         </button>
+
+        <button style={{ position: 'fixed', right: 0, bottom: 0 }} onContextMenu={handleClick}>
+          Right click to test window position constrains
+        </button>
+        <button style={{ position: 'fixed', right: 0, top: 0 }} onContextMenu={handleClick}>
+          Right click to test window position constrains
+        </button>
       </section>
     </div>
   )
